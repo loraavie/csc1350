@@ -1,5 +1,4 @@
 package polynomialtester;
-import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.Arrays;
 /**
@@ -19,24 +18,24 @@ public class PolynomialTester {
      * @param degree the degree of the function
      * @return the string version of the input values as a function
      */
-    public static String toString(double[] v, int degree) {
-        String str = ""+v[0]+"x^"+degree;
+ public static String toString(double[] v, int degree) {
+     String str="";
+     if(degree>0)
+     { str += ""+v[0]+"x^"+degree;
     for (int i = degree-1; i >0; i--)
       str += (" + "+v[i]+"x^"+i);
-    str +=" + "+v[degree];
+    str +=" + "+v[degree];}
+     else
+     { str+= v[0];}
    return str+"";
     }
-    public static double eval(double[] coeffs, double exp, int degree){
-    double ans=0;
-    for(int i = degree; i>=0;i--){
-      int n=0;
-      if(i>=0)
-        ans +=  Math.pow(coeffs[n],i)*exp;
-      else
-        ans+= coeffs[n];
-    n++;
-    }
-    return ans;
+    public static double eval(double[] coeffs, double mult, int degree){
+    double sum=0;
+    double degreeD=degree;
+    for(int i=0; i<coeffs.length; i++){
+		sum+=coeffs[i]*Math.pow(mult, degreeD);
+    degreeD--;}
+    return sum;
     }
     public static void main(String[] args) {
         int x=0;
@@ -71,17 +70,27 @@ public class PolynomialTester {
             poly3[z]=cin.nextInt();
             z++;
         }
+
         System.out.println("Enter the value k at which to evaluate the polynomials ->");
         double k = cin.nextDouble();
+        double f=eval(poly1, k, degree1) ;
+        double g=eval(poly2, k, degree2) ;
+        double h=eval(poly3,k,degree3);
+        double gcomph = eval(poly2, h, degree2);
+        double fcompgcomph= eval(poly1, gcomph, degree1); 
+        double gcompf= eval(poly2, f, degree2);
+        double fcompg= eval(poly1, g, degree1);
+        double hcompgcompf = eval(poly3, gcompf, degree3);
         System.out.println("f(x)= "+toString(poly1, degree1));
         System.out.println("h(x)= "+toString(poly2, degree2));
         System.out.println("h(x)= "+toString(poly3, degree3));
         System.out.printf("f(%f)= %f", k, eval(poly1, k, degree1));
         System.out.printf("\ng(%f)= %f", k, eval(poly2, k, degree2));
         System.out.printf("\nh(%f)= %f", k, eval(poly3, k, degree3));
-        System.out.printf("\ng(f(%f))= %f", k, eval(poly2, k, degree2));
-        System.out.printf("\nf(g(h(%f))= %f", k, eval(poly3, k, degree3));
-        System.out.printf("\nh(g(f(%f))= %f", k, eval(poly3, k, degree3));
+        System.out.printf("\nf(g(%f))= %f", k, fcompg);
+        System.out.printf("\ng(f(%f))= %f", k, gcompf);
+        System.out.printf("\nf(g(h(%f))= %f", k, fcompgcomph);
+        System.out.printf("\nh(g(f(%f))= %f", k, hcompgcompf);
         
         
     }
