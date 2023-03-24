@@ -1,6 +1,5 @@
 package polynomialtester;
 import java.util.Scanner;
-import java.util.Arrays;
 /**
  * This program is intended to output polynomials based on the degree input and value input. It also should be able to evaluate the polynomials at a value k, and also the compositions of functions at value k.
  * @author Lora Elliott
@@ -22,8 +21,9 @@ public class PolynomialTester {
      String str="";
      if(degree>0)
      { str += ""+v[0]+"x^"+degree;
-    for (int i = degree-1; i >0; i--)
-      str += (" + "+v[i]+"x^"+i);
+    for (int i = degree-1; i >1; i--)
+      str+=(" + "+v[i]+"x^"+i);
+    str+=" + " + v[degree-1]+"x";
     str +=" + "+v[degree];}
      else
      { str+= v[0];}
@@ -59,7 +59,6 @@ public class PolynomialTester {
             poly2[y]=cin.nextInt();
             y++;
         }
-        System.out.println(Arrays.toString(poly2));
         System.out.println("Enter the degree of the polynomial h(x) ->");
         int degree3 = cin.nextInt();
         System.out.println("Enter the coefficients of g(x) in orders of descending powers ->");
